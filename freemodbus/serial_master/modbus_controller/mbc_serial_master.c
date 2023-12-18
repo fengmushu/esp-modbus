@@ -153,7 +153,7 @@ static esp_err_t mbc_serial_master_set_descriptor(const mb_parameter_descriptor_
                             ESP_ERR_INVALID_ARG, "mb descriptor cid field is incorrect.");
         MB_MASTER_CHECK((reg_ptr->param_key != NULL),
                             ESP_ERR_INVALID_ARG, "mb descriptor param key is incorrect.");
-        MB_MASTER_CHECK((reg_ptr->mb_size > 0),
+        MB_MASTER_CHECK((reg_ptr->mb_size >= 0),
                             ESP_ERR_INVALID_ARG, "mb descriptor param size is incorrect.");
     }
     mbm_opts->mbm_param_descriptor_table = descriptor;
@@ -311,7 +311,7 @@ static uint8_t mbc_serial_master_get_command(mb_param_type_t param_type, mb_para
             break;
         case MB_PARAM_COIL:
             command = (mode == MB_PARAM_WRITE) ?
-                        MB_FUNC_WRITE_MULTIPLE_COILS :
+                        MB_FUNC_WRITE_SINGLE_COIL :
                         MB_FUNC_READ_COILS;
             break;
         case MB_PARAM_DISCRETE:
